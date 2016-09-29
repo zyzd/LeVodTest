@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.mstring.andtest">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:name=".ApiApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".activity.MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".activity.VideoGetActivity" android:label="@string/video_get"/>
+        <activity android:name=".activity.VideoListActivity" android:label="@string/video_list"/>
+        <activity android:name=".activity.ImageGetActivity" android:label="@string/image_get"/>
+        <activity android:name=".activity.DataVideoHourActvity" android:label="@string/data_video_hour"/>
+        <activity android:name=".activity.DataVideoDateActivity" android:label="@string/data_video_date"/>
+        <activity android:name=".activity.DataTotalDateActivity" android:label="@string/data_total_date"/>
+    </application>
+
+</manifest>

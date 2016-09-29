@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">andtest</string>
+    <string name="video_get">获取单个视频信息</string>
+    <string name="video_list">获取视频列表</string>
+    <string name="image_get">获取视频截图</string>
+    <string name="data_video_hour">获取以小时为单位的视频数据</string>
+    <string name="data_video_date">获取以天为单位的视频数据</string>
+    <string name="data_total_date">获取以天为单位的所有数据</string>
+</resources>

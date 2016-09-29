@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/til_video_id"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <EditText
+        android:text="2016-09-27"
+        android:maxLength="10"
+        android:id="@+id/et_end_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="endDate(格式：yyyy-mm-dd)" />
+</android.support.design.widget.TextInputLayout>
