@@ -1,5 +1,6 @@
 package com.mstring.andtest.activity;
 
+import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.view.View;
 import android.widget.Button;
@@ -7,6 +8,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
+import com.lecloud.sdk.constant.PlayerParams;
 import com.mstring.andtest.R;
 import com.mstring.andtest.base.BaseNetActivity;
 import com.mstring.andtest.bean.LeDataTotalDateBean;
@@ -14,6 +16,7 @@ import com.mstring.andtest.bean.LeDataVideoDateBean;
 import com.mstring.andtest.bean.LeResultBean;
 import com.mstring.andtest.utils.LeUrlUtils;
 import com.mstring.andtest.utils.TLog;
+import com.mstring.andtest.utils.UIHelper;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -47,12 +50,13 @@ public class DataTotalDateActivity extends BaseNetActivity<ArrayList<LeDataTotal
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_start_request:
                 startRequest();
                 break;
         }
     }
+
     private void startRequest() {
         String startDate = mEtStartDate.getText().toString().trim();
         String endDate = mEtEndDate.getText().toString().trim();
@@ -68,9 +72,11 @@ public class DataTotalDateActivity extends BaseNetActivity<ArrayList<LeDataTotal
         mTvResult.setText(data.toString());
     }
 
+
     @Override
     protected Type getType() {
-        return new TypeToken<LeResultBean<ArrayList<LeDataTotalDateBean>>>(){}.getType();
+        return new TypeToken<LeResultBean<ArrayList<LeDataTotalDateBean>>>() {
+        }.getType();
     }
 
     @Override

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
@@ -46,8 +47,8 @@ public class PlayActivity extends Activity {
 
         @Override
         public String onGetVideoRateList(LinkedHashMap<String, String> map) {
-            for (Map.Entry<String, String> rates : map.entrySet()) {
-                if (rates.getValue().equals("高清")) {
+            for(Map.Entry<String,String> rates:map.entrySet()){
+                if(rates.getValue().equals("高清")){
                     return rates.getKey();
                 }
             }
@@ -59,41 +60,6 @@ public class PlayActivity extends Activity {
     private int mPlayMode;
     private boolean mHasSkin;
     private boolean mPano;
-    private Intent intent;
-
-    /**
-     * 乐视云点播
-     */
-    private Intent startLecloudVod() {
-        intent = new Intent();
-        Bundle mBundle = new Bundle();
-        mBundle.putInt(PlayerParams.KEY_PLAY_MODE, PlayerParams.VALUE_PLAYER_VOD);
-//        if(mVodId.isSelected()){
-            byUUId_VUID(mBundle);
-//        }else{
-//            byURL(mBundle);
-//        }
-        mBundle.putBoolean("pano",false);
-        mBundle.putBoolean("hasSkin",true);
-        intent.putExtra(PlayActivity.DATA, mBundle);
-//        startActivity(intent);
-        return intent;
-    }
-
-    private void byURL(Bundle mBundle) {
-        mBundle.putString("path", "http://yuntv.letv.com/bcloud.swf?uu=p94tg27gs8&vu=95e1684e78&auto_play=1&gpcflag=1&lang=zh_CN");
-    }
-
-    private void byUUId_VUID(Bundle mBundle) {
-        mBundle.putString(PlayerParams.KEY_PLAY_UUID, "p94tg27gs8");
-        mBundle.putString(PlayerParams.KEY_PLAY_VUID, "d0386838c5");
-        mBundle.putString(PlayerParams.KEY_PLAY_CHECK_CODE, "");
-        mBundle.putString(PlayerParams.KEY_PLAY_PAYNAME, "0");
-        mBundle.putString(PlayerParams.KEY_PLAY_USERKEY, "151398");
-//			mBundle.putString(PlayerParams.KEY_PLAY_BUSINESSLINE, "101");
-        mBundle.putString(PlayerParams.KEY_PLAY_PU, "0");
-    }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,15 +68,13 @@ public class PlayActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.video_play);
         initData();
-
-        mHasSkin = true;
-        mPano = false;
+        mHasSkin = getIntent().getBundleExtra(DATA).getBoolean("hasSkin");
+        mPano = getIntent().getBundleExtra(DATA).getBoolean("pano");
         initView();
     }
 
     private void initData() {
-        //Intent intent = getIntent();
-        Intent intent =  startLecloudVod();
+        Intent intent = getIntent();
         if (intent != null) {
             mBundle = intent.getBundleExtra(DATA);
             if (mBundle == null) {
@@ -121,10 +85,6 @@ public class PlayActivity extends Activity {
                 mPlayMode = mBundle.getInt(PlayerParams.KEY_PLAY_MODE, -1);
             }
         }
-//        mHasSkin = getIntent().getBundleExtra(DATA).getBoolean("hasSkin");
-//        mPano = getIntent().getBundleExtra(DATA).getBoolean("pano");
-        mHasSkin = intent.getBundleExtra(DATA).getBoolean("hasSkin");
-        mPano = intent.getBundleExtra(DATA).getBoolean("pano");
     }
 
     private void initView() {
@@ -159,7 +119,7 @@ public class PlayActivity extends Activity {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (videoView != null) {
+                if(videoView != null){
                     videoView.resetPlayer();
                     mBundle.putString(PlayerParams.KEY_PLAY_UUID, "hxn7psp8ot");
                     mBundle.putString(PlayerParams.KEY_PLAY_VUID, "49bf3407cb");
@@ -180,7 +140,7 @@ public class PlayActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (videoView != null) {
+        if(videoView!=null){
             videoView.onResume();
         }
     }
@@ -188,7 +148,7 @@ public class PlayActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-        if (videoView != null) {
+        if(videoView!=null){
             videoView.onPause();
         }
 

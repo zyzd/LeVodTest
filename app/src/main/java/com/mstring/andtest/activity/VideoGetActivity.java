@@ -1,5 +1,6 @@
 package com.mstring.andtest.activity;
 
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -8,12 +9,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
+import com.lecloud.sdk.constant.PlayerParams;
 import com.mstring.andtest.R;
 import com.mstring.andtest.base.BaseNetActivity;
 import com.mstring.andtest.bean.LeResultBean;
 import com.mstring.andtest.bean.LeVideoGetBean;
 import com.mstring.andtest.utils.LeUrlUtils;
 import com.mstring.andtest.utils.TLog;
+import com.mstring.andtest.utils.UIHelper;
 
 import java.lang.reflect.Type;
 
@@ -82,6 +85,24 @@ public class VideoGetActivity extends BaseNetActivity<LeVideoGetBean> {
     @Override
     protected void parseData(LeVideoGetBean data) {
         mTvResult.setText(data.toString());
+        UIHelper.openPlayActivity(this,getBundle(data));
+    }
+
+    private Bundle getBundle(LeVideoGetBean data) {
+        Bundle bundle = new Bundle();
+        bundle.putInt(PlayerParams.KEY_PLAY_MODE, PlayerParams.VALUE_PLAYER_VOD);
+
+        bundle.putString(PlayerParams.KEY_PLAY_UUID, LeUrlUtils.user_unique);
+        bundle.putString(PlayerParams.KEY_PLAY_VUID, data.getVideo_unique());
+        bundle.putString(PlayerParams.KEY_PLAY_CHECK_CODE, "");
+        bundle.putString(PlayerParams.KEY_PLAY_PAYNAME, data.getVideo_name());
+        bundle.putString(PlayerParams.KEY_PLAY_USERKEY, LeUrlUtils.userId);
+//			bundle.putString(PlayerParams.KEY_PLAY_BUSINESSLINE, "101");
+        bundle.putString(PlayerParams.KEY_PLAY_PU, "0");
+
+        bundle.putBoolean("pano", false);
+        bundle.putBoolean("hasSkin", true);
+        return bundle;
     }
 
 }

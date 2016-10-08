@@ -2,6 +2,7 @@ package com.mstring.andtest.utils;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 
 import com.mstring.andtest.activity.DataTotalDateActivity;
 import com.mstring.andtest.activity.DataVideoDateActivity;
@@ -45,8 +46,9 @@ public class UIHelper {
         context.startActivity(intent);
     }
 
-    public static void openPlayActivity(Context context) {
+    public static void openPlayActivity(Context context, Bundle bundle) {
         Intent intent = new Intent(context, PlayActivity.class);
+        intent.putExtra(PlayActivity.DATA, bundle);
         context.startActivity(intent);
     }
 }

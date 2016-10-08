@@ -39,7 +39,11 @@
         <activity android:name=".activity.DataVideoHourActvity" android:label="@string/data_video_hour"/>
         <activity android:name=".activity.DataVideoDateActivity" android:label="@string/data_video_date"/>
         <activity android:name=".activity.DataTotalDateActivity" android:label="@string/data_total_date"/>
-        <activity android:name=".activity.PlayActivity" android:label="播放界面"/>
+        <activity android:name=".activity.PlayActivity" android:label="播放界面"
+            android:configChanges="keyboard|screenSize|orientation|layoutDirection"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"
+            />
 
         <service
             android:name="com.letvcloud.cmf.MediaService"

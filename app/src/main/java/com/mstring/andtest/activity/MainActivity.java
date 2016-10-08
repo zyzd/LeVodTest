@@ -1,10 +1,12 @@
 package com.mstring.andtest.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.lecloud.sdk.constant.PlayerParams;
 import com.mstring.andtest.R;
 import com.mstring.andtest.base.BaseActivity;
 import com.mstring.andtest.utils.UIHelper;
@@ -103,6 +105,31 @@ public class MainActivity extends BaseActivity {
     }
 
     private void openPlayView() {
-        UIHelper.openPlayActivity(this);
+        UIHelper.openPlayActivity(this,getBundle());
     }
+
+    /**
+     * 乐视云点播
+     */
+    private Bundle getBundle() {
+        Bundle bundle = new Bundle();
+        bundle.putInt(PlayerParams.KEY_PLAY_MODE, PlayerParams.VALUE_PLAYER_VOD);
+        if(true){
+            bundle.putString(PlayerParams.KEY_PLAY_UUID, "p94tg27gs8");
+            bundle.putString(PlayerParams.KEY_PLAY_VUID, "d0386838c5");
+            bundle.putString(PlayerParams.KEY_PLAY_CHECK_CODE, "");
+            bundle.putString(PlayerParams.KEY_PLAY_PAYNAME, "0");
+            bundle.putString(PlayerParams.KEY_PLAY_USERKEY, "151398");
+//			bundle.putString(PlayerParams.KEY_PLAY_BUSINESSLINE, "101");
+            bundle.putString(PlayerParams.KEY_PLAY_PU, "0");
+        }else{
+            // Url可以是在线视频，也可以是本地视频
+            // String playPath = "/sdcard/demo.mp4"
+            bundle.putString("path", "http://cache.utovr.com/201601131107187320.mp4");
+        }
+        bundle.putBoolean("pano", false);
+        bundle.putBoolean("hasSkin",true);
+        return bundle;
+    }
+
 }
