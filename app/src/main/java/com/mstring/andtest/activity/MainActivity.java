@@ -17,6 +17,7 @@ public class MainActivity extends BaseActivity {
     private Button mBtnDataVideoHour;
     private Button mBtnDataVideoDate;
     private Button mBtnDataTotalDate;
+    private Button mBtnPlayView;
 
     @Override
     protected int getLayoutId() {
@@ -31,6 +32,7 @@ public class MainActivity extends BaseActivity {
         mBtnDataVideoHour = (Button) findViewById(R.id.btn_data_video_hour);
         mBtnDataVideoDate = (Button) findViewById(R.id.btn_data_video_date);
         mBtnDataTotalDate = (Button) findViewById(R.id.btn_data_total_date);
+        mBtnPlayView = (Button) findViewById(R.id.btn_play_view);
     }
 
     @Override
@@ -41,6 +43,7 @@ public class MainActivity extends BaseActivity {
         mBtnDataVideoHour.setOnClickListener(this);
         mBtnDataVideoDate.setOnClickListener(this);
         mBtnDataTotalDate.setOnClickListener(this);
+        mBtnPlayView.setOnClickListener(this);
     }
 
     @Override
@@ -69,9 +72,11 @@ public class MainActivity extends BaseActivity {
             case R.id.btn_data_total_date:
                 requestDataTotalDate();
                 break;
+            case R.id.btn_play_view:
+                openPlayView();
+                break;
         }
     }
-
 
     private void requestVideoInfo() {
         UIHelper.openVideoGetAcitivity(this);
@@ -93,10 +98,11 @@ public class MainActivity extends BaseActivity {
         UIHelper.openDataVideoDateActvity(this);
     }
 
-
     private void requestDataTotalDate() {
         UIHelper.openDataTotalDateActvity(this);
     }
 
-
+    private void openPlayView() {
+        UIHelper.openPlayActivity(this);
+    }
 }

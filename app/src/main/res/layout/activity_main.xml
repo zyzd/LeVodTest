@@ -46,5 +46,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/data_total_date" />
+        <Button
+            android:id="@+id/btn_play_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/play_view" />
     </LinearLayout>
 </ScrollView>

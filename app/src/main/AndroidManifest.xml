@@ -3,6 +3,21 @@
     package="com.mstring.andtest">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission.FLASHLIGHT" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+
 
     <application
         android:name=".ApiApplication"
@@ -24,6 +39,18 @@
         <activity android:name=".activity.DataVideoHourActvity" android:label="@string/data_video_hour"/>
         <activity android:name=".activity.DataVideoDateActivity" android:label="@string/data_video_date"/>
         <activity android:name=".activity.DataTotalDateActivity" android:label="@string/data_total_date"/>
+        <activity android:name=".activity.PlayActivity" android:label="播放界面"/>
+
+        <service
+            android:name="com.letvcloud.cmf.MediaService"
+            android:process=":cmf" />
+        <activity
+            android:name="com.lecloud.skin.activity.FeedBackActivity"
+            android:configChanges="keyboard|screenSize|orientation|layoutDirection"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" >
+        </activity>
+
     </application>
 
 </manifest>

@@ -7,6 +7,7 @@ import com.mstring.andtest.activity.DataTotalDateActivity;
 import com.mstring.andtest.activity.DataVideoDateActivity;
 import com.mstring.andtest.activity.DataVideoHourActvity;
 import com.mstring.andtest.activity.ImageGetActivity;
+import com.mstring.andtest.activity.PlayActivity;
 import com.mstring.andtest.activity.VideoGetActivity;
 import com.mstring.andtest.activity.VideoListActivity;
 
@@ -41,6 +42,11 @@ public class UIHelper {
     }
     public static void openDataTotalDateActvity(Context context) {
         Intent intent = new Intent(context, DataTotalDateActivity.class);
+        context.startActivity(intent);
+    }
+
+    public static void openPlayActivity(Context context) {
+        Intent intent = new Intent(context, PlayActivity.class);
         context.startActivity(intent);
     }
 }

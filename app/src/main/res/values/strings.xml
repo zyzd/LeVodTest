@@ -6,4 +6,5 @@
     <string name="data_video_hour">获取以小时为单位的视频数据</string>
     <string name="data_video_date">获取以天为单位的视频数据</string>
     <string name="data_total_date">获取以天为单位的所有数据</string>
+    <string name="play_view">播放界面</string>
 </resources>
