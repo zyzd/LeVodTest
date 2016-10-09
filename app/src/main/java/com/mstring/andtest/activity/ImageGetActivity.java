@@ -1,9 +1,13 @@
 package com.mstring.andtest.activity;
 
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -14,15 +18,15 @@ import com.mstring.andtest.R;
 import com.mstring.andtest.base.BaseNetActivity;
 import com.mstring.andtest.bean.LeImageGetBean;
 import com.mstring.andtest.bean.LeResultBean;
-import com.mstring.andtest.bean.LeVideoGetBean;
 import com.mstring.andtest.utils.LeUrlUtils;
 import com.mstring.andtest.utils.TLog;
 import com.mstring.andtest.utils.VolleyHelper;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import static android.R.attr.data;
+import static com.mstring.andtest.R.id.imageView;
 
 /**
  * Created by 李宗源 on 2016/9/28.
@@ -31,10 +35,13 @@ import java.util.regex.Pattern;
 public class ImageGetActivity extends BaseNetActivity<LeImageGetBean> {
 
     private Button mBtnStartRequest;
-    private TextView mTvResult;
+//    private TextView mTvResult;
     private EditText mEtVideoId;
     private EditText mEtImageSize;
-    private ImageView mImageView;
+    public GridView mGridView;
+    //    private ImageView mImageView;
+    private ArrayList<String> mDatas = new ArrayList<>();
+    public ImageAdapter mAdapter;
 
     @Override
     protected int getLayoutId() {
@@ -46,8 +53,12 @@ public class ImageGetActivity extends BaseNetActivity<LeImageGetBean> {
         mEtVideoId = (EditText) findViewById(R.id.et_video_id);
         mEtImageSize = (EditText) findViewById(R.id.et_image_size);
         mBtnStartRequest = (Button) findViewById(R.id.btn_start_request);
-        mImageView = (ImageView) findViewById(R.id.imageView);
-        mTvResult = (TextView) findViewById(R.id.tv_result);
+//        mImageView = (ImageView) findViewById(R.id.imageView);
+        mGridView = (GridView) findViewById(R.id.gridview);
+//        mTvResult = (TextView) findViewById(R.id.tv_result);
+
+        mAdapter = new ImageAdapter();
+        mGridView.setAdapter(mAdapter);
     }
 
     @Override
@@ -57,7 +68,7 @@ public class ImageGetActivity extends BaseNetActivity<LeImageGetBean> {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_start_request:
                 startRequest();
                 break;
@@ -74,7 +85,7 @@ public class ImageGetActivity extends BaseNetActivity<LeImageGetBean> {
         }
 
         String imageSize = mEtImageSize.getText().toString().trim();
-        switch (imageSize){
+        switch (imageSize) {
             case "100_100":
             case "200_200":
             case "300_300":
@@ -100,26 +111,67 @@ public class ImageGetActivity extends BaseNetActivity<LeImageGetBean> {
 
         String url = "";
         try {
-            url = LeUrlUtils.getLeImageGetUrl(Integer.parseInt(videoId),imageSize);
+            url = LeUrlUtils.getLeImageGetUrl(Integer.parseInt(videoId), imageSize);
         } catch (NumberFormatException e) {
             e.printStackTrace();
             Toast.makeText(this, "vidoId格式错误！", Toast.LENGTH_SHORT).show();
             return;
         }
         TLog.d("zyzd", "VideoListActivity>>url--> " + url);
-        VolleyHelper.stringRequestByGet(url,this,this);
+        VolleyHelper.stringRequestByGet(url, this, this);
     }
 
     @Override
     protected void parseData(LeImageGetBean data) {
-        Glide.with(this).load(data.getImg1()).into(mImageView);
-        mTvResult.setText(data.toString());
+
+        if (data == null) {
+            return;
+        }
+
+        mDatas.clear();
+        mDatas.add(data.getImg1());
+        mDatas.add(data.getImg2());
+        mDatas.add(data.getImg3());
+        mDatas.add(data.getImg4());
+        mDatas.add(data.getImg5());
+        mDatas.add(data.getImg6());
+        mDatas.add(data.getImg7());
+        mDatas.add(data.getImg8());
+
+        mAdapter.notifyDataSetChanged();
 
     }
 
     @Override
     protected Type getType() {
-        return new TypeToken<LeResultBean<LeImageGetBean>>(){}.getType();
+        return new TypeToken<LeResultBean<LeImageGetBean>>() {
+        }.getType();
+    }
+
+    public class ImageAdapter extends BaseAdapter {
+
+        @Override
+        public int getCount() {
+            return mDatas.size();
+        }
+
+        @Override
+        public String getItem(int position) {
+            return getItem(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View view = LayoutInflater.from(ImageGetActivity.this).inflate(R.layout.item_image_get, parent, false);
+            ImageView imageView = (ImageView) view.findViewById(R.id.imageView);
+            Glide.with(ImageGetActivity.this).load(mDatas.get(position)).into(imageView);
+            return view;
+        }
     }
 
 

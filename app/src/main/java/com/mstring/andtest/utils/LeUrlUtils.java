@@ -111,7 +111,7 @@ public class LeUrlUtils {
      * @param video_name 根据视频名称模糊搜，可以为空，默认为查询所有
      * @return 获取视频列表信息
      */
-    public static String getVideoListUrl(int index, int size, int status, String video_name) {
+    public static String getVideoListUrl(String video_name, int status ,int index, int size) {
 
         if (index < 1) {
             TLog.e("zyzd", "getVideoListUrl: index起始值为1");

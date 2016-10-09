@@ -7,4 +7,9 @@
     <string name="data_video_date">获取以天为单位的视频数据</string>
     <string name="data_total_date">获取以天为单位的所有数据</string>
     <string name="play_view">播放界面</string>
+
+    <!-- 加载更多View显示相关文字 -->
+    <string name="load_more_normal">松开加载更多</string>
+    <string name="load_more_loading">加载数据中，请稍等...</string>
+    <string name="load_more_error">加载失败，请重试</string>
 </resources>

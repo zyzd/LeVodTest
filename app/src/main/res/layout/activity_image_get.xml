@@ -14,24 +14,12 @@
         android:layout_height="wrap_content"
         android:text="开始请求数据" />
 
-    <ScrollView
+    <GridView
+        android:id="@+id/gridview"
+        android:numColumns="2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:gravity="center_horizontal"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:id="@+id/imageView"
-                android:scaleType="fitXY"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-            <TextView
-                android:id="@+id/tv_result"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </LinearLayout>
-    </ScrollView>
+    </GridView>
+
 </LinearLayout>

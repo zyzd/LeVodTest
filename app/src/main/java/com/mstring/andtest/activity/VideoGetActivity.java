@@ -27,8 +27,10 @@ import java.lang.reflect.Type;
 public class VideoGetActivity extends BaseNetActivity<LeVideoGetBean> {
 
     private Button mBtnStartRequest;
+    private Button mBtnRequestAndShow;
     private EditText mEtVideoId;
     private TextView mTvResult;
+    private boolean flag;
 
 
     @Override
@@ -39,6 +41,7 @@ public class VideoGetActivity extends BaseNetActivity<LeVideoGetBean> {
     @Override
     public void initView() {
         mBtnStartRequest = (Button) findViewById(R.id.btn_start_request);
+        mBtnRequestAndShow = (Button) findViewById(R.id.btn_request_and_show);
         mEtVideoId = (EditText) findViewById(R.id.et_video_id);
         mTvResult = (TextView) findViewById(R.id.tv_result);
     }
@@ -46,12 +49,18 @@ public class VideoGetActivity extends BaseNetActivity<LeVideoGetBean> {
     @Override
     protected void addListener() {
         mBtnStartRequest.setOnClickListener(this);
+        mBtnRequestAndShow.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_start_request:
+                flag = true;
+                startRequest();
+                break;
+            case R.id.btn_request_and_show:
+                flag = false;
                 startRequest();
                 break;
         }
@@ -84,8 +93,12 @@ public class VideoGetActivity extends BaseNetActivity<LeVideoGetBean> {
 
     @Override
     protected void parseData(LeVideoGetBean data) {
-        mTvResult.setText(data.toString());
-        UIHelper.openPlayActivity(this,getBundle(data));
+        if(flag){
+            mTvResult.setText(data.toString());
+        }else{
+            UIHelper.openPlayActivity(this,getBundle(data));
+        }
+
     }
 
     private Bundle getBundle(LeVideoGetBean data) {

@@ -11,6 +11,7 @@ import com.mstring.andtest.activity.ImageGetActivity;
 import com.mstring.andtest.activity.PlayActivity;
 import com.mstring.andtest.activity.VideoGetActivity;
 import com.mstring.andtest.activity.VideoListActivity;
+import com.mstring.andtest.activity.VideoListShowActivity;
 
 /**
  * Created by 李宗源 on 2016/9/28.
@@ -49,6 +50,11 @@ public class UIHelper {
     public static void openPlayActivity(Context context, Bundle bundle) {
         Intent intent = new Intent(context, PlayActivity.class);
         intent.putExtra(PlayActivity.DATA, bundle);
+        context.startActivity(intent);
+    }
+
+    public static void openVideoListShowActivity(Context context) {
+        Intent intent = new Intent(context, VideoListShowActivity.class);
         context.startActivity(intent);
     }
 }

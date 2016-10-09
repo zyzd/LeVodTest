@@ -11,6 +11,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="开始请求数据" />
+    <Button
+        android:id="@+id/btn_request_and_show"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="请求数据并展示" />
 
     <ScrollView
         android:layout_width="match_parent"
