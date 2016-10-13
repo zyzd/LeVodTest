@@ -1,4 +1,4 @@
-package com.mstring.andtest.activity;
+package com.mstring.andtest.activity.vod;
 
 
 import android.app.Activity;

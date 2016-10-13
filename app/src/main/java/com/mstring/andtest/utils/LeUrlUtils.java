@@ -4,7 +4,6 @@ import android.text.TextUtils;
 
 import java.util.Date;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
 
@@ -33,7 +32,7 @@ public class LeUrlUtils {
     /**
      * 用户id
      */
-    public static final String userId = "849894";
+    public static final String userid = "849894";
 
     /**
      * UUID:user_unique
@@ -45,9 +44,9 @@ public class LeUrlUtils {
     public static final String format = "json";
 
     /**
-     * ver 版本
+     * ver_vod 点播版本
      */
-    public static final String ver = "2.0";
+    public static final String ver_vod = "2.0";
     /**
      * 获取单个视频的详细信息的api
      */
@@ -77,6 +76,11 @@ public class LeUrlUtils {
      * 视频播放首帧截图设置
      */
     public static final String API_PLAY_UPDATE_INITPIC = "play.update.initpic";
+    /**
+     * 签名
+     */
+    public static final String SIGN = "sign";
+
 
     /**
      * @param video_id 视频id
@@ -86,7 +90,7 @@ public class LeUrlUtils {
         StringBuffer sb = new StringBuffer();
         TreeMap<String, Object> map = new TreeMap<String, Object>();
         map.put("video_id", video_id);
-        map.putAll(getmBaseMaps(API_VIDEO_GET));
+        map.putAll(getBaseVodMaps(API_VIDEO_GET));
         return getLeVodUrl(map);
     }
 
@@ -111,7 +115,7 @@ public class LeUrlUtils {
      * @param video_name 根据视频名称模糊搜，可以为空，默认为查询所有
      * @return 获取视频列表信息
      */
-    public static String getVideoListUrl(String video_name, int status ,int index, int size) {
+    public static String getVideoListUrl(String video_name, int status, int index, int size) {
 
         if (index < 1) {
             TLog.e("zyzd", "getVideoListUrl: index起始值为1");
@@ -142,7 +146,7 @@ public class LeUrlUtils {
         }
 
         TreeMap<String, Object> treeMap = new TreeMap<>();
-        treeMap.putAll(getmBaseMaps(API_VIDEO_LIST));
+        treeMap.putAll(getBaseVodMaps(API_VIDEO_LIST));
         treeMap.put("index", index);
         treeMap.put("size", size);
         treeMap.put("status", status);
@@ -162,7 +166,7 @@ public class LeUrlUtils {
      */
     public static String getLeImageGetUrl(int video_id, String size) {
         TreeMap<String, Object> treeMap = new TreeMap<>();
-        treeMap.putAll(getmBaseMaps(API_IMAGE_GET));
+        treeMap.putAll(getBaseVodMaps(API_IMAGE_GET));
         treeMap.put("video_id", video_id);
         treeMap.put("size", size);
         return getLeVodUrl(treeMap);
@@ -199,7 +203,7 @@ public class LeUrlUtils {
         }
 
         TreeMap<String, Object> treeMap = new TreeMap<>();
-        treeMap.putAll(getmBaseMaps(API_DATA_VIDEO_HOUR));
+        treeMap.putAll(getBaseVodMaps(API_DATA_VIDEO_HOUR));
         treeMap.put("date", date);
         if (hour >= 0 || hour <= 23) {//小时错误则视为不作为请求参数
             treeMap.put("hour", hour);
@@ -239,7 +243,7 @@ public class LeUrlUtils {
         }
 
         TreeMap<String, Object> treeMap = new TreeMap<>();
-        treeMap.putAll(getmBaseMaps(API_DATA_VIDEO_DATE));
+        treeMap.putAll(getBaseVodMaps(API_DATA_VIDEO_DATE));
         treeMap.put("start_date", start_date);
         treeMap.put("end_date", end_date);
         treeMap.put("index", index);
@@ -276,7 +280,7 @@ public class LeUrlUtils {
             size = 10;//默认值为10
 
         TreeMap<String, Object> treeMap = new TreeMap<>();
-        treeMap.putAll(getmBaseMaps(API_DATA_TOTAL_DATE));
+        treeMap.putAll(getBaseVodMaps(API_DATA_TOTAL_DATE));
         treeMap.put("start_date", start_date);
         treeMap.put("end_date", end_date);
         treeMap.put("index", index);
@@ -287,15 +291,16 @@ public class LeUrlUtils {
 
     /**
      * 视频播放首帧截图设置
+     *
      * @param video_id
      * @param init_pic
      * @return 视频播放首帧截图设置的url地址
      */
-    public static String getUpdateInitPicUrl(int video_id,String init_pic){
+    public static String getUpdateInitPicUrl(int video_id, String init_pic) {
         TreeMap<String, Object> treeMap = new TreeMap<>();
-        treeMap.putAll(getmBaseMaps(API_PLAY_UPDATE_INITPIC));
-        treeMap.put("video_id",video_id);
-        treeMap.put("init_pic",init_pic);
+        treeMap.putAll(getBaseVodMaps(API_PLAY_UPDATE_INITPIC));
+        treeMap.put("video_id", video_id);
+        treeMap.put("init_pic", init_pic);
         return getLeVodUrl(treeMap);
     }
 
@@ -321,13 +326,17 @@ public class LeUrlUtils {
         return sb.toString();
     }
 
-    public static Map<String, Object> getmBaseMaps(String api) {
+    /**
+     * @param api 标准点播的api名
+     * @return 返回标准点播的基本参数的map集合
+     */
+    public static Map<String, Object> getBaseVodMaps(String api) {
         TreeMap<String, Object> treeMap = new TreeMap<String, Object>();
         treeMap.put("api", api);
         treeMap.put("format", format);
         treeMap.put("timestamp", getTimeStamp());
         treeMap.put("user_unique", user_unique);
-        treeMap.put("ver", ver);
+        treeMap.put("ver", ver_vod);
         return treeMap;
     }
 
@@ -337,4 +346,245 @@ public class LeUrlUtils {
     public static long getTimeStamp() {
         return (new Date()).getTime();
     }
+
+
+    //---------------------------------------------------华丽分割线：以下是直播请求--------------------------------------------------
+
+
+    /**
+     * 标准直播的接口地址
+     */
+    public static final String BaseLeLivePath = "http://api.open.lecloud.com/live/execute";
+    /**
+     * 标准直播的版本号
+     */
+    public static final String ver_live = "4.0";
+
+    /**
+     * 创建直播活动的Method
+     */
+    public static final String LE_LIVE_METHOD_CREATE = "lecloud.cloudlive.activity.create";
+    /**
+     * 查询直播活动的Method
+     */
+    public static final String LE_LIVE_METHOD_SEARCH = "lecloud.cloudlive.activity.search";
+    /**
+     * 修改直播活动的Method
+     */
+    public static final String LE_LIVE_METHOD_MODIFY = "lecloud.cloudlive.activity.modify";
+    /**
+     * 修改直播活动封面method(直接上传一个图片，支持格式jpg、png、gif)
+     */
+    public static final String LE_LIVE_METHOD_MODIFY_COVERIMG = "lecloud.cloudlive.activity.modifyCoverImg";
+
+
+    /**
+     * @param method 标准直播的方法名
+     * @return 返回标准直播的基本参数的map集合
+     */
+    public static TreeMap<String, String> getBaseLiveMaps(String method) {
+        TreeMap<String, String> treeMap = new TreeMap<String, String>();
+        treeMap.put("method", method);
+        treeMap.put("timestamp", getTimeStamp() + "");
+        treeMap.put("userid", userid);
+        treeMap.put("ver", ver_live);
+        return treeMap;
+    }
+
+    /**
+     * @param activityName     直播活动名称(200个字符以内)
+     * @param activityCategory 活动分类，参见下面《活动分类编码表》
+     * @param startTime        开始时间，从1970开始的毫秒数
+     * @param endTime          结束时间，从1970开始的毫秒数
+     * @param playMode         播放模式，0：实时直播 1：流畅直播。
+     * @param liveNum          机位数量，范围为：1,2,3,4. 默认为1
+     * @param codeRateTypes    流的码率类型，由大到小排列。取值范围：13 流畅；16 高清；19 超清； 25   1080P；99 原画。默认按最高码率播放，如果有原画则按原画播放
+     * @param params           coverImgUrl     活动封面地址，如果为空，则系统会默认一张图片
+     *                         description     活动描述（1024个字符以内）
+     *                         needRecord      是否支持全程录制       0：否    1：是。默认为0
+     *                         needTimeShift   是否支持时移          0：否    1：是。默认为0
+     *                         needFullView	   是否全景观看          0：否    1：是。默认为0
+     * @return 乐视创建标准直播活动的参数列表
+     */
+    public static Map<String, String> getLiveCreateMaps(String activityName, String activityCategory, long startTime, long endTime, int playMode, int liveNum, int[] codeRateTypes, Map<String, String> params) {
+        TLog.d("zyzd", "LeUrlUtils>>getLiveCreateMaps--> ");
+        Map<String, String> treeMap = getBaseLiveMaps(LE_LIVE_METHOD_CREATE);
+        treeMap.put("activityName", activityName);
+        treeMap.put("activityCategory", activityCategory);
+        treeMap.put("startTime", startTime + "");
+        treeMap.put("endTime", endTime + "");
+        treeMap.put("playMode", playMode + "");
+        treeMap.put("liveNum", liveNum + "");
+        int length = codeRateTypes.length;
+        String codeRateTypesStr = "";
+        if (length > 0) {
+            if (length > 1) {
+                for (int i = 0; i < length - 1; i++) {
+                    codeRateTypesStr = codeRateTypesStr + codeRateTypes[i] + ",";
+                }
+            }
+            codeRateTypesStr += codeRateTypes[length - 1];
+        }
+        treeMap.put("codeRateTypes", codeRateTypesStr);
+        if (params != null && params.size() > 0) {
+            treeMap.putAll(params);
+        }
+        treeMap.put("sign", MD5Utils.getMd5(getSignStr(treeMap)));
+//        treeMap.put("coverImgUrl", coverImgUrl);
+//        treeMap.put("description", description);
+//        treeMap.put("needRecord", needRecord);
+//        treeMap.put("needTimeShift", needTimeShift);
+//        treeMap.put("needFullView", needFullView);
+        return treeMap;
+    }
+
+    /**
+     * 直播活动ID activityId
+     */
+    public static final String LE_LIVE_PARAMS_ACTIVITY_ID = "activityId";
+    /**
+     * 直播活动名称 activityName
+     */
+    public static final String LE_LIVE_PARAMS_ACTIVITY_NAME = "activityName";
+    /**
+     * 活动分类 activityCategory
+     */
+    public static final String LE_LIVE_PARAMS_ACTIVITY_CATEGORY = "activityCategory";
+    /**
+     * 直播活动状态 activityStatus
+     */
+    public static final String LE_LIVE_PARAMS_ACTIVITYSTATUS = "activityStatus";
+    /**
+     * 开始时间，从1970开始的毫秒数
+     */
+    public static final String LE_LIVE_PARAMS_START_TIME = "startTime";
+    /**
+     * 结束时间，从1970开始的毫秒数
+     */
+    public static final String LE_LIVE_PARAMS_END_TIME = "endTime";
+    /**
+     * 活动封面地址 coverImgUrl
+     */
+    public static final String LE_LIVE_PARAMS_COVERIMG_URL = "coverImgUrl";
+    /**
+     * 活动描述 description
+     */
+    public static final String LE_LIVE_PARAMS_DESCRIPTION = "description";
+    /**
+     * 机位数量 liveNum
+     */
+    public static final String LE_LIVE_PARAMS_LIVE_NUM = "liveNum";
+    /**
+     * 流的码率类型 codeRateTypes
+     */
+    public static final String LE_LIVE_PARAMS_CODE_RATE_TYPES = "codeRateTypes";
+    /**
+     * 是否支持全程录制 needRecord
+     */
+    public static final String LE_LIVE_PARAMS_NEED_RECORD = "needRecord";
+    /**
+     * 是否支持时移 needTimeShift
+     */
+    public static final String LE_LIVE_PARAMS_NEED_TIMESHIFT = "needTimeShift";
+    /**
+     * 是否支持全景观看 needFullView
+     */
+    public static final String LE_LIVE_PARAMS_NEED_FULLVIEW = "needFullView";
+    /**
+     * 播放模式 playMode
+     */
+    public static final String LE_LIVE_PARAMS_PLAY_MODE = "playMode";
+    /**
+     * 从第几条数据开始查询 offSet
+     */
+    public static final String LE_LIVE_PARAMS_OFFSET = "offSet";
+    /**
+     * 一次返回多少条数据 fetchSize
+     */
+    public static final String LE_LIVE_PARAMS_FETCHSIZE = "fetchSize";
+
+    /**
+     * @param params 当传递的参数为null或传递的为空map时，默认查询所有
+     *               activityId	 	    LE_LIVE_PARAMS_ACTIVITY_ID       直播活动ID
+     *               activityName       LE_LIVE_PARAMS_ACTIVITY_NAME     直播活动名称
+     *               activityStatus	    LE_LIVE_PARAMS_ACTIVITYSTATUS   直播活动状态。0：未开始 1：已开始 3：已结束
+     *               offSet	            LE_LIVE_PARAMS_OFFSET           从第几条数据开始查询，默认0
+     *               fetchSize		    LE_LIVE_PARAMS_FETCHSIZE        一次返回多少条数据，默认为10，最多不能超过100条
+     * @return 返回查询活动列表
+     */
+    public static String getLeLiveSearchUrl(TreeMap<String, String> params) {
+        TreeMap<String, String> treeMap = getBaseLiveMaps(LE_LIVE_METHOD_SEARCH);
+        if (params != null) {
+            treeMap.putAll(params);
+        }
+        String url = getLeLiveUrl(treeMap);
+        TLog.d("zyzd", "LeUrlUtils>>getLeLiveSearchUrl--> " + url);
+        return url;
+    }
+
+    /**
+     * @param activityId 直播活动ID
+     * @param params     以下参数为非传参数，可视具体情况进行传入
+     *                   LE_LIVE_PARAMS_ACTIVITY_NAME      直播活动名称(200个字符以内)
+     *                   LE_LIVE_PARAMS_ACTIVITY_CATEGORY  活动分类
+     *                   LE_LIVE_PARAMS_START_TIME         开始时间，从1970开始的毫秒数
+     *                   LE_LIVE_PARAMS_END_TIME           结束时间，从1970开始的毫秒数
+     *                   LE_LIVE_PARAMS_COVERIMG_URL       活动封面地址
+     *                   LE_LIVE_PARAMS_DESCRIPTION        活动描述（255个字符以内）
+     *                   LE_LIVE_PARAMS_LIVE_NUM           机位数量，范围为：1，2，3，4
+     *                   LE_LIVE_PARAMS_CODE_RATE_TYPES    流的码率类型，逗号分隔。取值范围：13 流畅； 16 高清；19 超清； 25 1080P；99 原画
+     *                   LE_LIVE_PARAMS_NEED_RECORD        是否支持全程录制 0：否 1：是
+     *                   LE_LIVE_PARAMS_NEED_TIMESHIFT     是否支持时移 0：否 1：是
+     *                   LE_LIVE_PARAMS_NEED_FULLVIEW      是否支持全景观看 0：否 1：是
+     *                   LE_LIVE_PARAMS_PLAY_MODE          播放模式：0：实时直播；1：流畅直播
+     * @return 获取修改直播活动的参数map集合（post）
+     */
+    public static TreeMap<String, String> getLiveModifyMaps(String activityId, TreeMap<String, String> params) {
+
+        TreeMap<String, String> treeMap = getBaseLiveMaps(LE_LIVE_METHOD_MODIFY);
+
+        treeMap.put(LE_LIVE_PARAMS_ACTIVITY_ID, activityId);
+
+        if (params != null && params.size() > 0) {
+            treeMap.putAll(params);
+        }
+
+        treeMap.put(SIGN, MD5Utils.getMd5(getSignStr(treeMap)));
+
+        return treeMap;
+    }
+
+    /**
+     * @param map
+     * @return 乐视标准直播的Get请求路径
+     */
+    private static String getLeLiveUrl(TreeMap<String, String> map) {
+        Set<String> keys = map.keySet();
+        StringBuffer sb = new StringBuffer();
+        for (String key : keys) {
+            TLog.d("zyzd", "LeUrlUtils>>getLeLiveUrl--> " + key);
+            sb.append(key).append(STR_EQUALS).append(map.get(key)).append(STR_AND);
+        }
+
+        String signStrPre = sb.toString();
+        sb.append("sign=").append(MD5Utils.getMd5(signStrPre.replaceAll("&|=", "") + secretkey));
+        sb.insert(0, BaseLeLivePath).insert(BaseLeLivePath.length(), "?");
+        return sb.toString();
+    }
+
+    /**
+     * @param treeMap 参数集合
+     * @return 返回拼接后签名原文
+     */
+    private static String getSignStr(Map<String, String> treeMap) {
+        Set<String> keySet = treeMap.keySet();
+        StringBuffer sb = new StringBuffer();
+        for (String key : keySet) {
+            sb.append(key).append(treeMap.get(key));
+        }
+        sb.append(secretkey);
+        return sb.toString();
+    }
+
+
 }

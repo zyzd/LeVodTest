@@ -1,20 +1,12 @@
-package com.mstring.andtest.activity;
-
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
+package com.mstring.andtest.activity.vod;
 
 import com.google.gson.reflect.TypeToken;
-import com.mstring.andtest.R;
 import com.mstring.andtest.adapter.DataTotalAdapter;
 import com.mstring.andtest.base.BaseAdapter;
-import com.mstring.andtest.base.BaseNetActivity;
 import com.mstring.andtest.base.ImitateGridViewDemoActivity;
 import com.mstring.andtest.bean.LeDataTotalDateBean;
 import com.mstring.andtest.bean.LeResultBean;
 import com.mstring.andtest.utils.LeUrlUtils;
-import com.mstring.andtest.utils.TLog;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;

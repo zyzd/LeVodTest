@@ -4,9 +4,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/latyout_video_id_input" />
+    <include layout="@layout/latyout_input_video_id" />
 
-    <include layout="@layout/layout_image_size_input" />
+    <include layout="@layout/layout_input_image_size" />
 
     <Button
         android:id="@+id/btn_start_request"

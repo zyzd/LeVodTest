@@ -1,4 +1,4 @@
-package com.mstring.andtest.activity;
+package com.mstring.andtest.activity.vod;
 
 import android.view.View;
 import android.widget.Button;
@@ -10,7 +10,6 @@ import com.mstring.andtest.R;
 import com.mstring.andtest.base.BaseNetActivity;
 import com.mstring.andtest.bean.LeDataVideoHourBean;
 import com.mstring.andtest.bean.LeResultBean;
-import com.mstring.andtest.bean.LeVideoGetBean;
 import com.mstring.andtest.utils.LeUrlUtils;
 import com.mstring.andtest.utils.TLog;
 

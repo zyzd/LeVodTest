@@ -3,4 +3,9 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="light_gray">#8888</color>
+    <color name="gray_dark">#9000</color>
+    <!--分割线-->
+    <color name="lineColor">#e3e3e3</color>
+    <color name="gray">#888</color>
 </resources>

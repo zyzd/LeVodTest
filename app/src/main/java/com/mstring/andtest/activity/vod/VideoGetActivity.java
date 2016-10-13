@@ -1,4 +1,4 @@
-package com.mstring.andtest.activity;
+package com.mstring.andtest.activity.vod;
 
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -109,7 +109,7 @@ public class VideoGetActivity extends BaseNetActivity<LeVideoGetBean> {
         bundle.putString(PlayerParams.KEY_PLAY_VUID, data.getVideo_unique());
         bundle.putString(PlayerParams.KEY_PLAY_CHECK_CODE, "");
         bundle.putString(PlayerParams.KEY_PLAY_PAYNAME, data.getVideo_name());
-        bundle.putString(PlayerParams.KEY_PLAY_USERKEY, LeUrlUtils.userId);
+        bundle.putString(PlayerParams.KEY_PLAY_USERKEY, LeUrlUtils.userid);
 //			bundle.putString(PlayerParams.KEY_PLAY_BUSINESSLINE, "101");
         bundle.putString(PlayerParams.KEY_PLAY_PU, "0");
 

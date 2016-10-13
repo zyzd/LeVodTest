@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
+    android:id="@+id/activity_live_home"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,16 +9,25 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.mstring.andtest.activity.MainActivity">
+    tools:context="com.mstring.andtest.activity.live.LiveHomeActivity">
     <Button
-        android:onClick="vod"
-        android:text="乐视标准点播"
+        android:onClick="create"
+        android:text="@string/le_live_create"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <Button
-        android:text="乐视标准直播"
-        android:onClick="live"
+        android:onClick="search"
+        android:text="@string/le_live_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
+    <Button
+        android:onClick="modify"
+        android:text="@string/le_live_modify"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <Button
+        android:onClick="modifyCoverImg"
+        android:text="@string/le_live_modifyCoverImg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </LinearLayout>

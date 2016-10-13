@@ -1,4 +1,4 @@
-package com.mstring.andtest.activity;
+package com.mstring.andtest.activity.vod;
 
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -24,9 +23,6 @@ import com.mstring.andtest.utils.VolleyHelper;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-
-import static android.R.attr.data;
-import static com.mstring.andtest.R.id.imageView;
 
 /**
  * Created by 李宗源 on 2016/9/28.

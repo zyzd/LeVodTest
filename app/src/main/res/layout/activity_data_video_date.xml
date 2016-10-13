@@ -4,11 +4,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/latyout_video_id_input" />
+    <include layout="@layout/latyout_input_video_id" />
 
     <include layout="@layout/latyout_start_date_input" />
 
-    <include layout="@layout/latyout_end_date_input" />
+    <include layout="@layout/latyout_input_end_date" />
 
     <Button
         android:id="@+id/btn_start_request"

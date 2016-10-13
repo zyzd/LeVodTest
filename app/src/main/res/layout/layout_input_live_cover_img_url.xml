@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <EditText
+        android:id="@+id/et_coverImgUrl"
+        android:text="http://i3.qhimg.com/t01fb04113743758d73.jpg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="活动封面地址" />
+</android.support.design.widget.TextInputLayout>

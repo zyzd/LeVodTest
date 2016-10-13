@@ -8,7 +8,8 @@ import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.mstring.andtest.activity.VideoGetActivity;
+
+import butterknife.ButterKnife;
 
 /**
  * Created by 李宗源 on 2016/9/28.
@@ -43,7 +44,8 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        Toast.makeText(this, "网络请求失败！", Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, "网络请求失败！", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,error.getMessage(), Toast.LENGTH_SHORT).show();
     }
 
     @Override

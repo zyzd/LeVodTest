@@ -12,4 +12,13 @@
     <string name="load_more_normal">松开加载更多</string>
     <string name="load_more_loading">加载数据中，请稍等...</string>
     <string name="load_more_error">加载失败，请重试</string>
+    <string name="le_live_create">创建直播活动</string>
+    <string name="le_live_search">查询直播活动列表</string>
+    <string name="le_live_modify">修改直播活动</string>
+    <string name="no">否</string>
+    <string name="yes">是</string>
+    <string name="le_live_modifyCoverImg">修改直播活动封面</string>
+
+    <string name="permissions_camera_error">相机无法完成初始化,请正确授权。</string>
+    <string name="str_request_camera_message">请求获取相机权限</string>
 </resources>
