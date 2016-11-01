@@ -9,5 +9,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="开始时间(yyyy-MM-dd HH:mm:ss)"
-        android:text="2016-10-13 09:35:20" />
+        android:text="2016-10-31 19:35:20" />
 </android.support.design.widget.TextInputLayout>

@@ -1,7 +1,10 @@
 package com.mstring.andtest.base;
 
+import android.text.TextUtils;
+
 import com.google.gson.Gson;
-import com.mstring.andtest.bean.LeResultBean;
+import com.google.gson.JsonSyntaxException;
+import com.mstring.andtest.utils.TLog;
 import com.mstring.andtest.utils.VolleyHelper;
 
 import java.lang.reflect.Type;
@@ -28,8 +31,18 @@ public abstract class BaseLeLiveNetActivity<T> extends BaseActivity {
     }
 
     protected void onSuccess(String response) {
-
-        T resultBean = (T) new Gson().fromJson(response, getType());
+        if(TextUtils.isEmpty(response)){
+            TLog.d("zyzd", "BaseLeLiveNetActivity>>onSuccess--> " + "response is empty!");
+            return;
+        }
+        TLog.d("zyzd", "BaseLeLiveNetActivity>>onSuccess--> " + response);
+        T resultBean = null;
+        try {
+            resultBean = (T) new Gson().fromJson(response, getType());
+        } catch (JsonSyntaxException e) {
+            e.printStackTrace();
+            TLog.d("zyzd", "BaseLeLiveNetActivity>>onSuccess--> 数据解析异常！" );
+        }
 
         if (resultBean == null)
             return;

@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.mstring.andtest.utils.TLog;
 
 import butterknife.ButterKnife;
 
@@ -45,7 +46,8 @@ public abstract class BaseActivity extends AppCompatActivity implements View.OnC
     @Override
     public void onErrorResponse(VolleyError error) {
 //        Toast.makeText(this, "网络请求失败！", Toast.LENGTH_SHORT).show();
-        Toast.makeText(this,error.getMessage(), Toast.LENGTH_SHORT).show();
+        TLog.d("zyzd", "BaseActivity>>onErrorResponse--> " + error.toString());
+        TLog.d("zyzd", "BaseActivity>>onErrorResponse--> " + error.getLocalizedMessage());
     }
 
     @Override

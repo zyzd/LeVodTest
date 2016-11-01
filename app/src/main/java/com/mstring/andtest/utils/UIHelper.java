@@ -6,9 +6,18 @@ import android.os.Bundle;
 
 import com.mstring.andtest.activity.MainActivity;
 import com.mstring.andtest.activity.live.LeLiveCreateActivty;
+import com.mstring.andtest.activity.live.LeLiveCreateRecTaskActivity;
+import com.mstring.andtest.activity.live.LeLiveGetActivityMachineStateActivity;
+import com.mstring.andtest.activity.live.LeLiveGetPlayInfoActivity;
+import com.mstring.andtest.activity.live.LeLiveGetPushTokenActivity;
+import com.mstring.andtest.activity.live.LeLiveGetPushUrlActivity;
+import com.mstring.andtest.activity.live.LeLiveGetUrlActivity;
 import com.mstring.andtest.activity.live.LeLiveModifyActivty;
 import com.mstring.andtest.activity.live.LeLiveModifyCoverImgActivty;
+import com.mstring.andtest.activity.live.LeLiveRecSearchResultActivity;
 import com.mstring.andtest.activity.live.LeLiveSearchActivty;
+import com.mstring.andtest.activity.live.LeLiveStopActivity;
+import com.mstring.andtest.activity.live.LeLiveStreaminfoSearchActivity;
 import com.mstring.andtest.activity.live.LiveHomeActivity;
 import com.mstring.andtest.activity.vod.DataTotalDateActivity;
 import com.mstring.andtest.activity.vod.DataVideoDateActivity;
@@ -90,8 +99,53 @@ public class UIHelper {
         Intent intent = new Intent(context, LeLiveModifyActivty.class);
         context.startActivity(intent);
     }
+
     public static void openLeLiveModifyCoverImgActivty(Context context) {
         Intent intent = new Intent(context, LeLiveModifyCoverImgActivty.class);
+        context.startActivity(intent);
+    }
+
+    public static void openLeLiveStopActivity(Context context) {
+        Intent intent = new Intent(context, LeLiveStopActivity.class);
+        context.startActivity(intent);
+    }
+
+    public static void openLeLiveGetUrlActivity(Context context) {
+        Intent intent = new Intent(context, LeLiveGetUrlActivity.class);
+        context.startActivity(intent);
+    }
+
+    public static void openLeLiveGetPushTokenActivity(Context context) {
+        Intent intent = new Intent(context, LeLiveGetPushTokenActivity.class);
+        context.startActivity(intent);
+    }
+
+    public static void openLeLiveGetPushUrlActivity(Context context) {
+        Intent intent = new Intent(context, LeLiveGetPushUrlActivity.class);
+        context.startActivity(intent);
+    }
+    public static void openLeLiveGetActivityMachineStateActivity(Context context) {
+        Intent intent = new Intent(context, LeLiveGetActivityMachineStateActivity.class);
+        context.startActivity(intent);
+    }
+
+    public static void openLeLiveStreaminfoSearchActivity(Context context) {
+        Intent intent = new Intent(context, LeLiveStreaminfoSearchActivity.class);
+        context.startActivity(intent);
+    }
+
+    public static void openLeLiveCreateRecTaskActivity(Context context) {
+        Intent intent = new Intent(context, LeLiveCreateRecTaskActivity.class);
+        context.startActivity(intent);
+    }
+
+    public static void openLeLiveRecSearchResultActivity(Context context) {
+        Intent intent = new Intent(context, LeLiveRecSearchResultActivity.class);
+        context.startActivity(intent);
+    }
+
+    public static void openLeLiveGetPlayInfoActivity(Context context) {
+        Intent intent = new Intent(context, LeLiveGetPlayInfoActivity.class);
         context.startActivity(intent);
     }
 }

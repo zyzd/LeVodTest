@@ -18,6 +18,8 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
 
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:name=".ApiApplication"
         android:allowBackup="true"
@@ -71,10 +73,46 @@
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar" />
         <activity android:name=".activity.live.LiveHomeActivity" />
-        <activity android:name=".activity.live.LeLiveCreateActivty" />
-        <activity android:name=".activity.live.LeLiveSearchActivty" />
-        <activity android:name=".activity.live.LeLiveModifyActivty" />
-        <activity android:name=".activity.live.LeLiveModifyCoverImgActivty"></activity>
+        <activity
+            android:name=".activity.live.LeLiveCreateActivty"
+            android:label="@string/le_live_create" />
+        <activity
+            android:name=".activity.live.LeLiveSearchActivty"
+            android:label="@string/le_live_search" />
+        <activity
+            android:name=".activity.live.LeLiveModifyActivty"
+            android:label="@string/le_live_modify" />
+        <activity
+            android:name=".activity.live.LeLiveModifyCoverImgActivty"
+            android:label="@string/le_live_modifyCoverImg" />
+        <activity
+            android:name=".activity.live.LeLiveStopActivity"
+            android:label="@string/le_live_stop" />
+        <activity
+            android:name=".activity.live.LeLiveGetUrlActivity"
+            android:label="@string/le_live_getUrl" />
+        <activity
+            android:name=".activity.live.LeLiveGetPushTokenActivity"
+            android:label="@string/le_live_getPushToken" />
+        <activity
+            android:name=".activity.live.LeLiveGetPushUrlActivity"
+            android:label="@string/le_live_getPushUrl" />
+        <activity
+            android:name=".activity.live.LeLiveGetActivityMachineStateActivity"
+            android:label="@string/le_live_getActivityMachineState" />
+        <activity
+            android:name=".activity.live.LeLiveStreaminfoSearchActivity"
+            android:label="@string/le_live_streaminfoSearch" />
+        <activity
+            android:name=".activity.live.LeLiveCreateRecTaskActivity"
+            android:label="@string/le_live_reateRecTaskMap" />
+        <activity
+            android:name=".activity.live.LeLiveRecSearchResultActivity"
+            android:label="@string/le_live_rec_searchResult" />
+        <activity
+            android:name=".activity.live.LeLiveGetPlayInfoActivity"
+            android:label="@string/le_live_getPlayInfo" />
+
     </application>
 
 </manifest>

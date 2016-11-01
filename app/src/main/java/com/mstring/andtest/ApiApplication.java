@@ -1,17 +1,14 @@
 package com.mstring.andtest;
 
 import android.app.ActivityManager;
+import android.app.ActivityManager.RunningAppProcessInfo;
 import android.app.Application;
 import android.content.Context;
-import android.app.ActivityManager.RunningAppProcessInfo;
 
 import com.lecloud.sdk.config.LeCloudPlayerConfig;
 import com.lecloud.sdk.listener.OnInitCmfListener;
-import com.mstring.andtest.handler.CrashHandler;
 
 import java.util.List;
-
-import static com.letvcloud.cmf.utils.DeviceUtils.getProcessName;
 
 /**
  * Created by 李宗源 on 2016/9/28.
@@ -31,7 +28,7 @@ public class ApiApplication extends Application {
         int host = LeCloudPlayerConfig.HOST_DEFAULT;
         if (getApplicationInfo().packageName.equals(processName)) {
             //CrashHandler是一个抓取崩溃log的工具类（可选）
-            CrashHandler.getInstance(this);
+            //CrashHandler.getInstance(this);
             try {
                 LeCloudPlayerConfig.setHostType(host);
                 LeCloudPlayerConfig.init(getApplicationContext());

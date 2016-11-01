@@ -5,9 +5,9 @@
     android:layout_height="wrap_content">
 
     <EditText
-        android:id="@+id/et_activityId"
+        android:id="@+id/et_liveId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="直播活动ID"
-        android:text="A2016103100000uy" />
+        android:hint="@string/liveId"
+        android:text="20161031300000130" />
 </android.support.design.widget.TextInputLayout>

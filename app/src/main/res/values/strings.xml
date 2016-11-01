@@ -21,4 +21,17 @@
 
     <string name="permissions_camera_error">相机无法完成初始化,请正确授权。</string>
     <string name="str_request_camera_message">请求获取相机权限</string>
+    <string name="le_live_stop">停止播放</string>
+    <string name="le_live_getUrl">获取播放页地址</string>
+    <string name="le_live_getPushToken">获取推流token</string>
+    <string name="le_live_getPushUrl">获取直播推流地址</string>
+    <string name="le_live_getActivityMachineState">查询活动下各机位的状态</string>
+    <string name="le_live_streaminfoSearch">获取直播活动的流信息</string>
+    <string name="le_live_reateRecTaskMap">创建打点录制任务</string>
+    <string name="liveId">直播ID</string>
+    <string name="le_live_rec_searchResult">打点录制查询</string>
+    <string name="taskId">任务ID</string>
+    <string name="offset">开始行数</string>
+    <string name="size">每页记录数</string>
+    <string name="le_live_getPlayInfo">获取录制视频信息</string>
 </resources>

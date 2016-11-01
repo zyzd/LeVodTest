@@ -10,6 +10,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,26 +19,33 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
+import com.lecloud.sdk.http.engine.HttpUploadEngine;
+import com.lecloud.sdk.http.entity.HttpUploadFile;
 import com.mstring.andtest.R;
 import com.mstring.andtest.base.BaseLeLiveNetActivity;
 import com.mstring.andtest.bean.LeLiveModifyCoverImgBean;
 import com.mstring.andtest.dialog.ImagePickerDialog;
 import com.mstring.andtest.utils.FileUtil;
 import com.mstring.andtest.utils.ImageUtils;
+import com.mstring.andtest.utils.LeUrlUtils;
 import com.mstring.andtest.utils.StringUtils;
 import com.mstring.andtest.utils.TLog;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.TreeMap;
 
 import pub.devrel.easypermissions.AfterPermissionGranted;
 import pub.devrel.easypermissions.EasyPermissions;
 
+
 public class LeLiveModifyCoverImgActivty extends BaseLeLiveNetActivity<LeLiveModifyCoverImgBean>
-        implements ImagePickerDialog.ImagePickerListener ,EasyPermissions.PermissionCallbacks {
+        implements ImagePickerDialog.ImagePickerListener, EasyPermissions.PermissionCallbacks {
 
     private static final int CAMERA_PERM = 1;
 
@@ -83,8 +91,56 @@ public class LeLiveModifyCoverImgActivty extends BaseLeLiveNetActivity<LeLiveMod
                 addImage();
                 break;
             case R.id.btn_start_request:
+                startRequest();
                 break;
         }
+    }
+
+    private void startRequest() {
+        String activityId = etActivityId.getText().toString().trim();
+        if (TextUtils.isEmpty(activityId)) {
+            Toast.makeText(getApplicationContext(), "直播活动ID不可以为空", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        HttpUploadEngine httpUploadEngine = new HttpUploadEngine();
+
+        httpUploadEngine.setUrl(LeUrlUtils.BaseLeLivePath);
+
+        //设置上传的文件
+        HttpUploadFile uploadFile = new HttpUploadFile(protraitPath);
+        TLog.d("zyzd", "LeLiveModifyCoverImgActivty>>uploadFile.length--> " + uploadFile.length());
+        ArrayList<HttpUploadFile> httpUploadFiles = new ArrayList<>();
+        httpUploadFiles.add(uploadFile);
+        httpUploadEngine.setFileParams(httpUploadFiles);
+        //设置请求头
+        TreeMap<String, String> headerMap = new TreeMap<>();
+        headerMap.put("Content-Type", "application/x-www-form-urlencoded");
+        headerMap.put("charset", "utf-8");
+        httpUploadEngine.setHeadParams(headerMap);
+        //设置请求体
+        TreeMap<String, String> coverImgMap = LeUrlUtils.getLiveModifyCoverImgMap(activityId);
+        httpUploadEngine.setUrlParams(coverImgMap);
+        //设置监听
+        httpUploadEngine.setUploadProgressListener(new HttpUploadEngine.UploadProgressListener() {
+            @Override
+            public void uploadedProgress(int i, int i1) {
+                TLog.d("zyzd", "LeLiveModifyCoverImgActivty>>uploadedProgress--> i:" + i + "i1:  " + i1);
+            }
+        });
+        //开始上传
+        httpUploadEngine.doUpload();
+
+//        TLog.d("zyzd", "LeLiveModifyCoverImgActivty>>startRequest--> " + protraitPath);
+//        Bitmap bitmap = ImageUtils.getBitmapByPath(protraitPath);
+//        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+//        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+//
+//        TreeMap<String, String> coverImgMap = LeUrlUtils.getLiveModifyCoverImgMap(activityId);
+//
+////        byte[] bytes = bos.toByteArray();
+////        TLog.d("zyzd", "LeLiveModifyCoverImgActivty>>startRequest--> " + bytes.length);
+//        VolleyHelper.modifyCoverByPost(LeUrlUtils.BaseLeLivePath, coverImgMap, this, this, protraitFile);
     }
 
     private void addImage() {
@@ -97,7 +153,7 @@ public class LeLiveModifyCoverImgActivty extends BaseLeLiveNetActivity<LeLiveMod
 
     @Override
     protected void parseData(LeLiveModifyCoverImgBean data) {
-
+        TLog.d("zyzd", "LeLiveModifyCoverImgActivty>>parseData--> " + data.toString());
     }
 
     @Override
@@ -182,7 +238,7 @@ public class LeLiveModifyCoverImgActivty extends BaseLeLiveNetActivity<LeLiveMod
 
         intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-        startActivityForResult(intent,ImageUtils.REQUEST_CODE_GETIMAGE_BYCAMERA);
+        startActivityForResult(intent, ImageUtils.REQUEST_CODE_GETIMAGE_BYCAMERA);
     }
 
     /**
@@ -195,65 +251,33 @@ public class LeLiveModifyCoverImgActivty extends BaseLeLiveNetActivity<LeLiveMod
         if (!StringUtils.isEmpty(protraitPath) && protraitFile.exists()) {
             protraitBitmap = ImageUtils
                     .loadImgThumbnail(protraitPath, 400, 400);
+            TLog.d("zyzd", "LeLiveModifyCoverImgActivty>>protraitPath--> " + protraitPath);
         } else {
             //AppContext.showToast("图像不存在，上传失败");
             Toast.makeText(getApplicationContext(), "图像不存在，上传失败", Toast.LENGTH_SHORT).show();
         }
+
         if (protraitBitmap != null) {
-            try{
+            try {
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(getApplicationContext(), "更换成功", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getApplicationContext(), "加载成功", Toast.LENGTH_SHORT).show();
                         // 显示新头像
                         imageCoverimg.setImageBitmap(protraitBitmap);
                     }
-                },500);
-            }catch (Exception e){
-                Toast.makeText(getApplicationContext(), "图像不存在，上传失败", Toast.LENGTH_SHORT).show();
+                }, 500);
+            } catch (Exception e) {
+                Toast.makeText(getApplicationContext(), "图像不存在，加载失败", Toast.LENGTH_SHORT).show();
             }
-//            try {
-//                OSChinaApi.updatePortrait(AppContext.getInstance()
-//                                .getLoginUid(), protraitFile,
-//                        new AsyncHttpResponseHandler() {
-//
-//                            @Override
-//                            public void onSuccess(int arg0, Header[] arg1,
-//                                                  byte[] arg2) {
-//                                Result res = XmlUtils.toBean(ResultBean.class,
-//                                        new ByteArrayInputStream(arg2))
-//                                        .getResult();
-//                                if (res.OK()) {
-//                                    AppContext.showToast("更换成功");
-//                                    // 显示新头像
-//                                    mUserFace.setImageBitmap(protraitBitmap);
-//                                    isChangeFace = true;
-//                                } else {
-//                                    AppContext.showToast(res.getErrorMessage());
-//                                }
-//                            }
-//
-//                            @Override
-//                            public void onFailure(int arg0, Header[] arg1,
-//                                                  byte[] arg2, Throwable arg3) {
-//                                AppContext.showToast("更换头像失败");
-//                            }
-//
-//                            @Override
-//                            public void onFinish() {
-//                                hideWaitDialog();
-//                            }
-//                        });
-//            } catch (FileNotFoundException e) {
-            // To.showToast("图像不存在，上传失败");
-//            }
         }
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        TLog.d("zyzd", "UserInfoActivity>>onActivityResult--> " +"have"+requestCode+(data==null) );
+        TLog.d("zyzd", "UserInfoActivity>>onActivityResult--> " + "have" + requestCode + (data == null));
         if (resultCode != Activity.RESULT_OK)
             return;
 
@@ -342,5 +366,12 @@ public class LeLiveModifyCoverImgActivty extends BaseLeLiveNetActivity<LeLiveMod
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         // EasyPermissions handles the request result.
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+
+    public byte[] getData(Bitmap bitmap) {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos);
+        return bos.toByteArray();
     }
 }

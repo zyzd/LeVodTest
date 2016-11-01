@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
+
 /**
  * Created by 李宗源 on 2016/9/28.
  */
@@ -376,6 +378,46 @@ public class LeUrlUtils {
      * 修改直播活动封面method(直接上传一个图片，支持格式jpg、png、gif)
      */
     public static final String LE_LIVE_METHOD_MODIFY_COVERIMG = "lecloud.cloudlive.activity.modifyCoverImg";
+    /**
+     * 停止直播活动，停止后不能再次使用该活动进行直播。
+     */
+    public static final String LE_LIVE_METHOD_STOP = "lecloud.cloudlive.activity.stop";
+    /**
+     * 活动安全设置
+     */
+    public static final String LE_LIVE_METHOD_Sercurity_config = "lecloud.cloudlive.activity.sercurity.config";
+    /**
+     * 获取播放页地址
+     */
+    public static final String LE_LIVE_METHOD_PLAYERPAGE_GETURL = "lecloud.cloudlive.activity.playerpage.getUrl";
+    /**
+     * 获取推流token，用于调用乐视云上传SDK使用。
+     */
+    public static final String LE_LIVE_METHOD_GET_PUSHTOKEN = "lecloud.cloudlive.activity.getPushToken";
+    /**
+     * 获取直播推流地址。
+     */
+    public static final String LE_LIVE_METHOD_GET_PUSHURL = "lecloud.cloudlive.activity.getPushUrl";
+    /**
+     * 获取直播推流地址。
+     */
+    public static final String LE_LIVE_METHOD_GET_ACTIVITY_MACHINESTATE = "lecloud.cloudlive.activity.getActivityMachineState";
+    /**
+     * 用于第三方播放器获取直播活动的流信息。
+     */
+    public static final String LE_LIVE_METHOD_STREAMINFO_SEARCH = "lecloud.cloudlive.vrs.activity.streaminfo.search";
+    /**
+     * 打点录制创建任务接口:创建打点录制任务。
+     */
+    public static final String LE_LIVE_METHOD_CREATE_REC_TASK = "lecloud.cloudlive.rec.createRecTask";
+    /**
+     * 根据直播ID、任务ID等条件，查询打点录制结果。
+     */
+    public static final String LE_LIVE_METHOD_REC_SEARCH_RESULT = "lecloud.cloudlive.rec.searchResult";
+    /**
+     * 根据活动ID，查询录制视频的videoId和videoUnique，其中videoUnique组合成播放地址。
+     */
+    public static final String LE_LIVE_METHOD_GET_PLAY_INFO = "lecloud.cloudlive.activity.getPlayInfo";
 
 
     /**
@@ -502,6 +544,22 @@ public class LeUrlUtils {
      * 一次返回多少条数据 fetchSize
      */
     public static final String LE_LIVE_PARAMS_FETCHSIZE = "fetchSize";
+    /**
+     * 直播ID，直播id查询参考《活动流信息查询接口》文档
+     */
+    public static final String LE_LIVE_PARAMS_LIVEID = "liveId";
+    /**
+     * 任务ID
+     */
+    public static final String LE_LIVE_PARAMS_TASKID = "taskId";
+    /**
+     * 开始行数 offset 用于打点录制查询
+     */
+    public static final String LE_LIVE_PARAMS_OFFSET_MIN = "offset";
+    /**
+     * 每页记录数
+     */
+    public static final String LE_LIVE_PARAMS_SIZE = "size";
 
     /**
      * @param params 当传递的参数为null或传递的为空map时，默认查询所有
@@ -555,6 +613,162 @@ public class LeUrlUtils {
     }
 
     /**
+     * 修改直播活动封面。直接上传一个图片，支持格式jpg、png、gif。
+     *
+     * @param activityId 直播活动ID
+     * @return 获取修改直播活动封面的参数map集合
+     */
+    public static TreeMap<String, String> getLiveModifyCoverImgMap(String activityId) {
+        TreeMap<String, String> treeMap = getBaseLiveMaps(LE_LIVE_METHOD_MODIFY_COVERIMG);
+        treeMap.put(LE_LIVE_PARAMS_ACTIVITY_ID, activityId);
+        treeMap.put(SIGN, MD5Utils.getMd5(getSignStr(treeMap)));
+        return treeMap;
+    }
+
+    /**
+     * 停止直播活动，停止后不能再次使用该活动进行直播。
+     *
+     * @param activityId
+     * @return
+     */
+    public static TreeMap<String, String> getLiveStopMap(String activityId) {
+        TreeMap<String, String> treeMap = getBaseLiveMaps(LE_LIVE_METHOD_STOP);
+        treeMap.put(LE_LIVE_PARAMS_ACTIVITY_ID, activityId);
+        treeMap.put(SIGN, MD5Utils.getMd5(getSignStr(treeMap)));
+        return treeMap;
+    }
+
+    /**
+     * 获取播放页地址。
+     *
+     * @param activityId
+     * @return
+     */
+    public static String getLivePlayerpageGetUrl(String activityId) {
+        TreeMap<String, String> treeMap = getBaseLiveMaps(LE_LIVE_METHOD_PLAYERPAGE_GETURL);
+        treeMap.put(LE_LIVE_PARAMS_ACTIVITY_ID, activityId);
+
+        String url = getLeLiveUrl(treeMap);
+        TLog.d("zyzd", "LeUrlUtils>>getLivePlayerpageGetUrl--> " + url);
+        return url;
+    }
+
+    /**
+     * 获取推流token，用于调用乐视云上传SDK使用。
+     *
+     * @param activityId
+     * @return
+     */
+    public static String getLiveGetPushTokenUrl(String activityId) {
+        TreeMap<String, String> treeMap = getBaseLiveMaps(LE_LIVE_METHOD_GET_PUSHTOKEN);
+        treeMap.put(LE_LIVE_PARAMS_ACTIVITY_ID, activityId);
+        String url = getLeLiveUrl(treeMap);
+        TLog.d("zyzd", "LeUrlUtils>>getLivePlayerpageGetUrl--> " + url);
+        return url;
+    }
+
+    /**
+     * 获取直播推流地址。
+     *
+     * @param activityId
+     * @return
+     */
+    public static String getLiveGetPushUrl(String activityId) {
+        TreeMap<String, String> treeMap = getBaseLiveMaps(LE_LIVE_METHOD_GET_PUSHURL);
+        treeMap.put(LE_LIVE_PARAMS_ACTIVITY_ID, activityId);
+        String url = getLeLiveUrl(treeMap);
+        TLog.d("zyzd", "LeUrlUtils>>getLivePlayerpageGetUrl--> " + url);
+        return url;
+    }
+
+    /**
+     * 查询活动下各机位的状态
+     *
+     * @param activityId
+     * @return
+     */
+    public static String getLiveGetActivityMachineStateUrl(String activityId) {
+        TreeMap<String, String> treeMap = getBaseLiveMaps(LE_LIVE_METHOD_GET_ACTIVITY_MACHINESTATE);
+        treeMap.put(LE_LIVE_PARAMS_ACTIVITY_ID, activityId);
+        String url = getLeLiveUrl(treeMap);
+        TLog.d("zyzd", "LeUrlUtils>>getLivePlayerpageGetUrl--> " + url);
+        return url;
+    }
+
+    /**
+     * 用于第三方播放器获取直播活动的流信息。
+     *
+     * @param activityId
+     * @return
+     */
+    public static String getLiveStreaminfoSearchUrl(String activityId) {
+        TreeMap<String, String> treeMap = getBaseLiveMaps(LE_LIVE_METHOD_STREAMINFO_SEARCH);
+        treeMap.put(LE_LIVE_PARAMS_ACTIVITY_ID, activityId);
+        String url = getLeLiveUrl(treeMap);
+        TLog.d("zyzd", "LeUrlUtils>>getLivePlayerpageGetUrl--> " + url);
+        return url;
+    }
+
+    /**
+     * 创建打点录制任务。
+     * 原画码率作为输入码率，直播上的码率作为输出码率，执行转码获取打点录制任务。
+     *
+     * @param liveId    直播ID，直播id查询参考《活动流信息查询接口》文档
+     * @param startTime 开始时间，从1970开始的毫秒数
+     * @param endTime   结束时间，从1970开始的毫秒数
+     * @return
+     */
+    public static TreeMap<String, String> getCreateRecTaskMap(String liveId, String startTime, String endTime) {
+        TreeMap<String, String> treeMap = getBaseLiveMaps(LE_LIVE_METHOD_CREATE_REC_TASK);
+        treeMap.put(LE_LIVE_PARAMS_LIVEID, liveId);
+        treeMap.put(LE_LIVE_PARAMS_START_TIME, startTime);
+        treeMap.put(LE_LIVE_PARAMS_END_TIME, endTime);
+        treeMap.put(SIGN, MD5Utils.getMd5(getSignStr(treeMap)));
+        return treeMap;
+    }
+
+
+    /**
+     * 打点录制查询结果接口
+     * 根据直播ID、任务ID等条件，查询打点录制结果。
+     * <p>
+     * 可以设置的参数为：
+     * 直播ID                         liveId           LE_LIVE_PARAMS_LIVEID
+     * 任务ID                         taskId           LE_LIVE_PARAMS_TASKID
+     * 开始行数                        offset           LE_LIVE_PARAMS_OFFSET_MIN
+     * 每页记录数                      size             LE_LIVE_PARAMS_SIZE
+     * 开始时间，从1970开始的毫秒数      startTime        LE_LIVE_PARAMS_START_TIME
+     * 结束时间，从1970开始的毫秒数      endTime          LE_LIVE_PARAMS_END_TIME
+     *
+     * @return
+     */
+    public static String getLiveRecSearchResultUrl(TreeMap<String, String> params) {
+        TreeMap<String, String> treeMap = getBaseLiveMaps(LE_LIVE_METHOD_REC_SEARCH_RESULT);
+        if (params != null) {
+            treeMap.putAll(params);
+        }
+        String url = getLeLiveUrl(treeMap);
+        TLog.d("zyzd", "LeUrlUtils>>getLivePlayerpageGetUrl--> " + url);
+        return url;
+    }
+
+    /**
+     * 获取录制视频信息接口
+     * 功能说明： 根据活动ID，查询录制视频的videoId和videoUnique，其中videoUnique组合成播放地址。
+     *
+     * @param activityId
+     * @return
+     */
+    public static String getLiveGetPlayInfo(String activityId) {
+        TreeMap<String, String> treeMap = getBaseLiveMaps(LE_LIVE_METHOD_GET_PLAY_INFO);
+        treeMap.put(LE_LIVE_PARAMS_ACTIVITY_ID, activityId);
+        String url = getLeLiveUrl(treeMap);
+        TLog.d("zyzd", "LeUrlUtils>>getLivePlayerpageGetUrl--> " + url);
+        return url;
+    }
+
+
+    /**
      * @param map
      * @return 乐视标准直播的Get请求路径
      */
@@ -572,6 +786,7 @@ public class LeUrlUtils {
         return sb.toString();
     }
 
+
     /**
      * @param treeMap 参数集合
      * @return 返回拼接后签名原文
@@ -585,6 +800,4 @@ public class LeUrlUtils {
         sb.append(secretkey);
         return sb.toString();
     }
-
-
 }
